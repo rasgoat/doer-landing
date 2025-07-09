@@ -861,7 +861,7 @@
                                 </div>
                             </div>
                             
-                            <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full transition-all duration-300 space-font text-base md:text-lg">
+                            <button id="individual-cta" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full transition-all duration-300 space-font text-base md:text-lg">
                                 Get Early Access
                             </button>
                         </div>
@@ -912,7 +912,7 @@
                                 </div>
                             </div>
                             
-                            <button class="w-full premium-button text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full transition-all duration-300 space-font text-base md:text-lg">
+                            <button id="business-cta" class="w-full premium-button text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full transition-all duration-300 space-font text-base md:text-lg">
                                 Get Early Access
                             </button>
                         </div>
@@ -959,7 +959,7 @@
                                 </div>
                             </div>
                             
-                            <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full transition-all duration-300 space-font text-base md:text-lg">
+                            <button id="enterprise-cta" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full transition-all duration-300 space-font text-base md:text-lg">
                                 Contact Sales
                             </button>
                         </div>
@@ -1069,4 +1069,74 @@
             submitButton.textContent = 'Subscribing...';
             submitButton.disabled = true;
             
-    
+            // Show success message (Formspree will handle the actual submission)
+            setTimeout(() => {
+                successMessage.style.display = 'block';
+                
+                // Hide success message after 8 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 8000);
+                
+                // Reset button state
+                submitButton.textContent = 'Notify Me When Available';
+                submitButton.disabled = false;
+            }, 1000);
+            
+            // Let Formspree handle the form submission naturally
+        });
+        
+        // All "Get Early Access" buttons scroll to newsletter
+        function scrollToNewsletter() {
+            document.getElementById('email').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById('email').focus();
+            }, 500);
+        }
+        
+        // Main hero CTA button
+        document.getElementById('ctaButton').addEventListener('click', scrollToNewsletter);
+        
+        // Individual plan CTA button  
+        document.getElementById('individual-cta').addEventListener('click', function(e) {
+            e.preventDefault();
+            scrollToNewsletter();
+        });
+        
+        // Business plan CTA button
+        document.getElementById('business-cta').addEventListener('click', function(e) {
+            e.preventDefault();
+            scrollToNewsletter();
+        });
+        
+        // Enterprise plan - contact sales (different behavior)
+        document.getElementById('enterprise-cta').addEventListener('click', function(e) {
+            e.preventDefault();
+            // For now, also scroll to newsletter. You can change this later to open a contact form
+            scrollToNewsletter();
+        });
+        
+        // Initialize particles
+        createParticles();
+        
+        // Add scroll animations
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const particles = document.querySelectorAll('.particle');
+            
+            particles.forEach((particle, index) => {
+                const speed = 0.02 + (index % 5) * 0.01;
+                particle.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+        
+        // Add smooth parallax effect
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.3;
+            
+            document.querySelector('.grid-glow').style.transform = `translateY(${rate}px)`;
+        });
+    </script>
+</body>
+</html> 
