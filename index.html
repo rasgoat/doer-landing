@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doer - You say. It does.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #000000;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.05) 0%, transparent 40%),
+                linear-gradient(180deg, #000000 0%, #0A0A0A 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #ffffff;
+        }
+        
+        .space-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 35%, #EC4899 70%, #FF6B6B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .gradient-text-alt {
+            background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #F472B6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 16px 40px rgba(0, 212, 255, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+        
+        .premium-glass {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 16px 48px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .premium-glass:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 20px 56px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        
+        .floating-animation {
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .premium-button {
+            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
+            box-shadow: 
+                0 0 40px rgba(0, 212, 255, 0.4),
+                0 8px 32px rgba(124, 58, 237, 0.3);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .premium-button:hover::before {
+            left: 100%;
+        }
+        
+        .premium-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 0 60px rgba(0, 212, 255, 0.6),
+                0 15px 40px rgba(124, 58, 237, 0.4);
+            border-color: rgba(0, 212, 255, 0.8);
+        }
+        
+        .plan-card {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .plan-card:hover::before {
+            opacity: 1;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 
+                0 24px 64px rgba(0, 212, 255, 0.18),
+                0 8px 32px rgba(124, 58, 237, 0.12);
+        }
+        
+        .premium-plan {
+            border: 2px solid rgba(0, 212, 255, 0.5);
+            background: rgba(0, 212, 255, 0.03);
+            box-shadow: 
+                0 0 40px rgba(0, 212, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+        }
+        
+        .app-logo {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 24px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .app-logo:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+        
+        .app-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(0, 212, 255, 0.8);
+            border-radius: 50%;
+            animation: particle-float 30s linear infinite;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        
+        @keyframes particle-float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 20px;
+            margin-top: 24px;
+            font-weight: 700;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+        }
+        
+        .logo-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00D4FF, #7C3AED, #FF6B6B);
+            opacity: 0.3;
+            animation: logo-pulse 4s ease-in-out infinite;
+            filter: blur(20px);
+        }
+        
+        @keyframes logo-pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.6; }
+        }
+        
+        .logo-blend {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            box-shadow: 
+                0 0 20px rgba(0, 212, 255, 0.4),
+                0 0 40px rgba(124, 58, 237, 0.2);
+            filter: brightness(1.1) contrast(1.1);
+        }
+        
+        @media (min-width: 768px) {
+            .logo-glow {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .logo-blend {
+                width: 80px;
+                height: 80px;
+                border: 3px solid rgba(0, 212, 255, 0.4);
+                box-shadow: 
+                    0 0 30px rgba(0, 212, 255, 0.4),
+                    0 0 60px rgba(124, 58, 237, 0.2);
+            }
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 
+                0 8px 24px rgba(0, 212, 255, 0.25),
+                0 4px 12px rgba(124, 58, 237, 0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-icon:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .feature-icon:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 12px 32px rgba(0, 212, 255, 0.3),
+                0 6px 16px rgba(124, 58, 237, 0.2);
+        }
+        
+        .feature-icon svg {
+            width: 36px;
+            height: 36px;
+            color: white;
+            z-index: 1;
+        }
+        
+        .text-subtitle {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.7;
+        }
+        
+        .grid-glow {
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        
+        .hero-stats {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 30px;
+            margin: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .hero-stats:hover {
+            background: rgba(0, 0, 0, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.15);
+        }
+        
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(0, 212, 255, 0.3);
+        }
+        
+        .check-icon::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: 900;
+        }
+        
+        .hero-text {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-section {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 2rem 0;
+        }
+        
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .plan-price {
+                font-size: 3rem;
+            }
+        }
+        
+        .plan-features {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+        
+        .multilingual-highlight {
+            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-text {
+                font-size: 1.8rem;
+                line-height: 1.3;
+                margin-bottom: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+                line-height: 1.2;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-stats {
+                margin: 4px;
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .text-subtitle {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            .glass-card {
+                padding: 1.5rem;
+                margin: 0.5rem;
+            }
+            
+            .premium-glass {
+                padding: 1.5rem;
+                margin: 0.5rem;
+            }
+            
+            .plan-card {
+                margin: 0.5rem;
+            }
+            
+            .cta-section {
+                padding: 2rem;
+                margin: 1rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-text {
+                font-size: 1.5rem;
+                line-height: 1.3;
+                margin-bottom: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+                line-height: 1.2;
+                margin-bottom: 1rem;
+            }
+            
+            .text-subtitle {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+            
+            .hero-stats {
+                margin: 2px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .glass-card {
+                padding: 1rem;
+                margin: 0.25rem;
+            }
+            
+            .premium-glass {
+                padding: 1rem;
+                margin: 0.25rem;
+            }
+            
+            .plan-card {
+                margin: 0.25rem;
+                padding: 1.5rem;
+            }
+            
+            .cta-section {
+                padding: 1.5rem;
+                margin: 0.5rem 0;
+            }
+            
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 16px;
+            }
+            
+            .feature-icon svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-glow"></div>
+    <div class="particles" id="particles"></div>
+    
+    <!-- Header -->
+    <header class="relative z-10 pt-8 pb-6 md:pt-16 md:pb-12">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex justify-center items-center">
+                <div class="logo-container">
+                    <div class="logo-glow"></div>
+                    <img src="logo.png" alt="Doer Logo" class="logo-blend relative z-10 floating-animation">
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="relative z-10 py-12 md:py-24 text-center">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-black mb-8 md:mb-12 gradient-text space-font tracking-tight">
+                    You say. It does.
+                </h1>
+                
+                <div class="max-w-5xl mx-auto mb-12 md:mb-16">
+                    <p class="hero-text px-4">
+                        Doer is the voice-command AI assistant that actually gets things done.
+                    </p>
+                    <p class="text-subtitle max-w-3xl mx-auto px-4">
+                        Dictate notes, fire off emails, schedule anything, and command integrations instantly. From startups to enterprises, Doer replaces 10 apps in 10 seconds.
+                    </p>
+                </div>
+                
+                <div class="mb-12 md:mb-16 px-4">
+                    <button id="ctaButton" class="premium-button text-white text-lg md:text-2xl font-bold py-4 px-8 md:py-6 md:px-16 rounded-full transition-all duration-300 hover:scale-105 space-font w-full sm:w-auto">
+                        → Get Early Access
+                    </button>
+                </div>
+                
+                <div class="flex flex-col space-y-3 md:flex-row md:justify-center md:items-center md:space-y-0 text-sm px-4">
+                    <div class="hero-stats">
+                        <div class="check-icon"></div>
+                        <span class="text-white font-semibold">Free for first 1,000 users — Limited Spots Only</span>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="check-icon"></div>
+                        <span class="text-white font-semibold">Works in 50+ languages • SOC 2 Ready • GDPR Compliant</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- What Doer Does Section -->
+    <section class="relative z-10 py-16 md:py-32">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-4xl mx-auto text-center mb-12 md:mb-20">
+                <h2 class="section-title gradient-text-alt space-font">What Doer Does</h2>
+                <p class="text-lg md:text-xl text-gray-300 mt-4 md:mt-6 px-4">
+                    <span class="multilingual-highlight">Ask in any language</span> to create content <span class="multilingual-highlight">in any language</span> — seamlessly bridging communication across the globe.
+                </p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="glass-card p-6 md:p-10 rounded-3xl">
+                    <div class="feature-icon">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM13 17h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white mb-4">Smart Email Drafting</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Speak your thoughts and generate perfectly formatted emails. Doer understands context, tone, and urgency, delivering instantly polished drafts ready to send.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 md:p-10 rounded-3xl">
+                    <div class="feature-icon">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white mb-4">AI-Structured Notes</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Capture your ideas on the go. Doer summarizes, formats, and organizes your thoughts in seconds, so your brain stays focused.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 md:p-10 rounded-3xl">
+                    <div class="feature-icon">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white mb-4">Smart Reminders</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Set tasks and reminders with just your voice. Doer handles time zones, recurring schedules, and syncs seamlessly across all your calendars.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 md:p-10 rounded-3xl">
+                    <div class="feature-icon">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11H16V18H8V11H9.2V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.4,8.7 10.4,10V11H13.6V10C13.6,8.7 12.8,8.2 12,8.2Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white mb-4">Enterprise-Grade Security</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Trusted by forward-thinking teams. Doer is built to meet enterprise-level data standards: SOC 2 Ready, GDPR Compliant, and encrypted across every interaction.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 md:p-10 rounded-3xl">
+                    <div class="feature-icon">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7 9l1.41 1.41L12 6.83l3.59 3.58L17 9l-5-5-5 5zm10 6l-1.41-1.41L12 17.17l-3.59-3.58L7 15l5 5 5-5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white mb-4">Universal App Sync</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Doer connects to Apple, Google, Outlook, Notion, Slack, Zoom, and more, syncing your actions in real time.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 md:p-10 rounded-3xl">
+                    <div class="feature-icon">
+                        <svg fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.19 0 2.34-.21 3.41-.6L12 18.5c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7c0 1.19-.21 2.34-.6 3.41l3.41 3.41c.39-1.07.6-2.22.6-3.41 0-5.52-4.48-10-10-10zm0 6c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white mb-4">Multilingual Voice-to-Action</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Speak in one language. Execute in another. Doer instantly transforms commands across 50+ languages for global teams and international workflows.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Core Technology Section -->
+    <section class="relative z-10 py-16 md:py-32">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 md:mb-24">
+                    <h2 class="section-title gradient-text space-font">Advanced AI Technology</h2>
+                    <p class="text-lg md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed px-4">
+                        Powered by neural networks and enterprise-grade infrastructure
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+                    <!-- Neural Language Processing -->
+                    <div class="premium-glass p-6 md:p-12 rounded-3xl">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 mx-auto">
+                            <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-4">Neural Language Processing</h3>
+                        <div class="text-blue-400 text-xs md:text-sm font-semibold mb-4 md:mb-6 space-x-1 md:space-x-2">
+                            <span>Real-time Processing</span>
+                            <span>•</span>
+                            <span>99.7% Accuracy</span>
+                            <span>•</span>
+                            <span>Context Understanding</span>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Advanced AI that understands natural language with human-like comprehension. Our neural networks process context, emotion, and intent across 50+ languages, adapting to your unique communication style and professional terminology.
+                        </p>
+                    </div>
+                    
+                    <!-- Autonomous Task Execution -->
+                    <div class="premium-glass p-6 md:p-12 rounded-3xl">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 mx-auto">
+                            <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7.5 3c.83 0 1.5.67 1.5 1.5S12.33 9 11.5 9 10 8.33 10 7.5 10.67 6 11.5 6zm2.5 9h-4v-1c0-1.33 2.67-2 4-2s4 .67 4 2v1z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-4">Autonomous Task Execution</h3>
+                        <div class="text-blue-400 text-xs md:text-sm font-semibold mb-4 md:mb-6 space-x-1 md:space-x-2">
+                            <span>Cloud-native Architecture</span>
+                            <span>•</span>
+                            <span>API Integration</span>
+                            <span>•</span>
+                            <span>24/7 Availability</span>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Transform voice commands into intelligent actions. Schedule complex meetings, compose professional emails, manage workflows, and execute multi-step processes—all through natural conversation with enterprise-grade reliability.
+                        </p>
+                    </div>
+                    
+                    <!-- Global Intelligence Engine -->
+                    <div class="premium-glass p-6 md:p-12 rounded-3xl">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 mx-auto">
+                            <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-4">Global Intelligence Engine</h3>
+                        <div class="text-blue-400 text-xs md:text-sm font-semibold mb-4 md:mb-6 space-x-1 md:space-x-2">
+                            <span>Cultural AI</span>
+                            <span>•</span>
+                            <span>Business Logic</span>
+                            <span>•</span>
+                            <span>Regional Adaptation</span>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Break language barriers with cultural intelligence. Execute tasks across languages while maintaining professional tone, cultural context, and business etiquette. Perfect for international teams and global operations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Plans Section -->
+    <section class="relative z-10 py-16 md:py-32">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-8xl mx-auto">
+                <div class="text-center mb-12 md:mb-24">
+                    <h2 class="section-title gradient-text space-font">Plans Built for Every Operator</h2>
+                    <p class="text-lg md:text-2xl text-gray-300 max-w-5xl mx-auto leading-relaxed px-4">
+                        Whether you're managing your day, your team, or your entire organization — Doer turns voice into action with unmatched precision and privacy.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 md:gap-12">
+                    <!-- Individual Plan -->
+                    <div class="plan-card rounded-3xl p-6 md:p-12 h-full relative">
+                        <div class="relative z-10">
+                            <div class="mb-8 md:mb-10">
+                                <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 space-font">Individual Plan</h3>
+                                <p class="text-gray-400 mb-4 md:mb-6 font-medium text-base md:text-lg">Your personal AI assistant.</p>
+                                <p class="text-sm text-gray-500 leading-relaxed">Designed for students, professionals, and productivity power-users.</p>
+                            </div>
+                            
+                            <div class="mb-8 md:mb-12">
+                                <div class="plan-price text-2xl md:text-3xl">$9<span class="text-lg md:text-xl text-gray-400">/month</span></div>
+                                <div class="text-sm text-gray-400 font-medium">Free for first 1,000 users</div>
+                            </div>
+                            
+                            <div class="space-y-4 md:space-y-6 mb-8 md:mb-12">
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Smart Notes & Daily Task Assistant
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Voice Reminders that sync to Calendar
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Send messages, emails instantly
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Launch & manage apps with one command
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Cross-platform messaging support
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Built-in tools: Apple Calendar, Gmail, Google Calendar, Apple Reminders
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full transition-all duration-300 space-font text-base md:text-lg">
+                                Get Early Access
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Business Plan -->
+                    <div class="plan-card premium-plan rounded-3xl p-6 md:p-12 h-full relative">
+                        <div class="absolute -top-6 md:-top-8 left-1/2 transform -translate-x-1/2 z-20">
+                            <span class="badge">Most Popular</span>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <div class="mb-8 md:mb-10">
+                                <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 space-font">Business Plan</h3>
+                                <p class="text-gray-400 mb-4 md:mb-6 font-medium text-base md:text-lg">For founders, operators & fast-moving teams.</p>
+                                <p class="text-sm text-gray-500 leading-relaxed">Run your company on voice. Reduce admin time by 80%.</p>
+                            </div>
+                            
+                            <div class="mb-8 md:mb-12">
+                                <div class="plan-price text-2xl md:text-3xl">$29<span class="text-lg md:text-xl text-gray-400">/month</span></div>
+                                <div class="text-sm text-gray-400 font-medium">Per user, billed annually</div>
+                            </div>
+                            
+                            <div class="space-y-4 md:space-y-6 mb-8 md:mb-12">
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    All Individual features
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Send multilingual emails instantly
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Zoom and Teams scheduling
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Cross-platform team calendar integration
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Supports: Slack, Zoom, Outlook, Notion, Teams
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Priority team support and onboarding
+                                </div>
+                            </div>
+                            
+                            <button class="w-full premium-button text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full transition-all duration-300 space-font text-base md:text-lg">
+                                Get Early Access
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Enterprise Plan -->
+                    <div class="plan-card rounded-3xl p-6 md:p-12 h-full relative">
+                        <div class="relative z-10">
+                            <div class="mb-8 md:mb-10">
+                                <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 space-font">Enterprise Suite</h3>
+                                <p class="text-gray-400 mb-4 md:mb-6 font-medium text-base md:text-lg">For scaling organizations and global teams.</p>
+                                <p class="text-sm text-gray-500 leading-relaxed">A customizable AI command center built for security, privacy, and power.</p>
+                            </div>
+                            
+                            <div class="mb-8 md:mb-12">
+                                <div class="plan-price text-2xl md:text-3xl">Custom</div>
+                                <div class="text-sm text-gray-400 font-medium">Contact sales for pricing</div>
+                            </div>
+                            
+                            <div class="space-y-4 md:space-y-6 mb-8 md:mb-12">
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    All Business features
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Custom app integrations & CRM links
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Dedicated success manager
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    Advanced analytics dashboard & usage insights
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    White-label & API access for internal tools
+                                </div>
+                                <div class="flex items-center plan-features">
+                                    <div class="check-icon mr-4"></div>
+                                    SOC 2 Ready | GDPR Compliant | Multi-language workflows
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full transition-all duration-300 space-font text-base md:text-lg">
+                                Contact Sales
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter Section -->
+    <section class="relative z-10 py-16 md:py-32">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="cta-section">
+                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-10 gradient-text space-font">Join the Waitlist</h2>
+                    <p class="text-gray-300 mb-8 md:mb-16 text-lg md:text-2xl leading-relaxed">
+                        Be among the first 1,000 users to experience the future of voice-powered productivity.
+                    </p>
+                    
+                    <form id="newsletter-form" class="space-y-6 md:space-y-10">
+                        <div>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                placeholder="Enter your email address"
+                                class="w-full px-6 py-4 md:px-10 md:py-6 bg-black/40 border border-white/20 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-lg md:text-xl backdrop-blur-20"
+                                required
+                            >
+                        </div>
+                        
+                        <button 
+                            type="submit" 
+                            class="w-full premium-button text-white font-bold py-4 px-8 md:py-6 md:px-12 rounded-full transition-all duration-300 text-lg md:text-2xl space-font"
+                        >
+                            Notify Me When Available
+                        </button>
+                    </form>
+                    
+                    <div id="success-message" class="success-message">
+                        🚀 Welcome to the future! You're on the list. We'll be in touch soon.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="relative z-10 py-12 md:py-20 border-t border-gray-800">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center">
+                <p class="text-white text-lg md:text-xl font-medium">
+                    © 2025 Doer. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            
+            for (let i = 0; i < 80; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 30 + 's';
+                particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
+                particles.appendChild(particle);
+            }
+        }
+        
+        // Newsletter form handling
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const successMessage = document.getElementById('success-message');
+            
+            // Store email in localStorage (in real app, send to server)
+            let subscribers = JSON.parse(localStorage.getItem('subscribers') || '[]');
+            
+            if (!subscribers.includes(email)) {
+                subscribers.push(email);
+                localStorage.setItem('subscribers', JSON.stringify(subscribers));
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                document.getElementById('email').value = '';
+                
+                // Hide success message after 8 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 8000);
+            } else {
+                alert('You are already subscribed!');
+            }
+        });
+        
+        // CTA button handling
+        document.getElementById('ctaButton').addEventListener('click', function() {
+            document.getElementById('email').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('email').focus();
+        });
+        
+        // Add plan selection handling
+        document.querySelectorAll('.plan-card button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.getElementById('email').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('email').focus();
+            });
+        });
+        
+        // Initialize particles
+        createParticles();
+        
+        // Add scroll animations
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const particles = document.querySelectorAll('.particle');
+            
+            particles.forEach((particle, index) => {
+                const speed = 0.02 + (index % 5) * 0.01;
+                particle.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+        
+        // Add smooth parallax effect
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.3;
+            
+            document.querySelector('.grid-glow').style.transform = `translateY(${rate}px)`;
+        });
+    </script>
+</body>
+</html> 
