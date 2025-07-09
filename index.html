@@ -979,15 +979,35 @@
                         Be among the first 1,000 users to experience the future of voice-powered productivity.
                     </p>
                     
-                    <form id="newsletter-form" class="space-y-6 md:space-y-10">
+                    <form id="newsletter-form" class="space-y-6 md:space-y-10" action="https://formspree.io/f/xjkrqqjn" method="POST">
+                        <input type="hidden" name="_next" value="https://thedoer.app">
+                        <input type="hidden" name="_subject" value="New Doer Newsletter Signup">
                         <div>
                             <input 
                                 type="email" 
                                 id="email" 
+                                name="email"
                                 placeholder="Enter your email address"
                                 class="w-full px-6 py-4 md:px-10 md:py-6 bg-black/40 border border-white/20 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-lg md:text-xl backdrop-blur-20"
                                 required
                             >
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input 
+                                type="text" 
+                                name="company"
+                                placeholder="Company (optional)"
+                                class="px-6 py-4 bg-black/40 border border-white/20 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300"
+                            >
+                            <select 
+                                name="user_type"
+                                class="px-6 py-4 bg-black/40 border border-white/20 rounded-full text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300"
+                            >
+                                <option value="individual">Individual User</option>
+                                <option value="business">Business/Team</option>
+                                <option value="enterprise">Enterprise</option>
+                            </select>
                         </div>
                         
                         <button 
@@ -1032,68 +1052,21 @@
             }
         }
         
-        // Newsletter form handling
+        // Newsletter form handling with Formspree
         document.getElementById('newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
             const email = document.getElementById('email').value;
             const successMessage = document.getElementById('success-message');
+            const submitButton = document.querySelector('button[type="submit"]');
             
-            // Store email in localStorage (in real app, send to server)
+            // Store locally as backup
             let subscribers = JSON.parse(localStorage.getItem('subscribers') || '[]');
-            
             if (!subscribers.includes(email)) {
                 subscribers.push(email);
                 localStorage.setItem('subscribers', JSON.stringify(subscribers));
-                
-                // Show success message
-                successMessage.style.display = 'block';
-                document.getElementById('email').value = '';
-                
-                // Hide success message after 8 seconds
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 8000);
-            } else {
-                alert('You are already subscribed!');
             }
-        });
-        
-        // CTA button handling
-        document.getElementById('ctaButton').addEventListener('click', function() {
-            document.getElementById('email').scrollIntoView({ behavior: 'smooth' });
-            document.getElementById('email').focus();
-        });
-        
-        // Add plan selection handling
-        document.querySelectorAll('.plan-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                document.getElementById('email').scrollIntoView({ behavior: 'smooth' });
-                document.getElementById('email').focus();
-            });
-        });
-        
-        // Initialize particles
-        createParticles();
-        
-        // Add scroll animations
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const particles = document.querySelectorAll('.particle');
             
-            particles.forEach((particle, index) => {
-                const speed = 0.02 + (index % 5) * 0.01;
-                particle.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-        
-        // Add smooth parallax effect
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.3;
+            // Show loading state
+            submitButton.textContent = 'Subscribing...';
+            submitButton.disabled = true;
             
-            document.querySelector('.grid-glow').style.transform = `translateY(${rate}px)`;
-        });
-    </script>
-</body>
-</html> 
+    
