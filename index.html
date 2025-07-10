@@ -11,6 +11,12 @@
     <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
     <link rel="shortcut icon" href="logo.png">
     
+    <!-- Vercel Analytics -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -1055,8 +1061,18 @@
         // Newsletter form handling with Formspree
         document.getElementById('newsletter-form').addEventListener('submit', function(e) {
             const email = document.getElementById('email').value;
+            const company = document.querySelector('input[name="company"]').value;
+            const userType = document.querySelector('select[name="user_type"]').value;
             const successMessage = document.getElementById('success-message');
             const submitButton = document.querySelector('button[type="submit"]');
+            
+            // Track newsletter signup with Vercel Analytics
+            if (window.va) {
+                window.va('track', 'Newsletter Signup', {
+                    user_type: userType,
+                    has_company: company ? 'yes' : 'no'
+                });
+            }
             
             // Store locally as backup
             let subscribers = JSON.parse(localStorage.getItem('subscribers') || '[]');
@@ -1095,23 +1111,41 @@
         }
         
         // Main hero CTA button
-        document.getElementById('ctaButton').addEventListener('click', scrollToNewsletter);
+        document.getElementById('ctaButton').addEventListener('click', function() {
+            // Track hero CTA click
+            if (window.va) {
+                window.va('track', 'CTA Click', { location: 'hero' });
+            }
+            scrollToNewsletter();
+        });
         
         // Individual plan CTA button  
         document.getElementById('individual-cta').addEventListener('click', function(e) {
             e.preventDefault();
+            // Track Individual plan CTA click
+            if (window.va) {
+                window.va('track', 'CTA Click', { location: 'individual_plan' });
+            }
             scrollToNewsletter();
         });
         
         // Business plan CTA button
         document.getElementById('business-cta').addEventListener('click', function(e) {
             e.preventDefault();
+            // Track Business plan CTA click
+            if (window.va) {
+                window.va('track', 'CTA Click', { location: 'business_plan' });
+            }
             scrollToNewsletter();
         });
         
         // Enterprise plan - contact sales (different behavior)
         document.getElementById('enterprise-cta').addEventListener('click', function(e) {
             e.preventDefault();
+            // Track Enterprise plan CTA click
+            if (window.va) {
+                window.va('track', 'CTA Click', { location: 'enterprise_plan' });
+            }
             // For now, also scroll to newsletter. You can change this later to open a contact form
             scrollToNewsletter();
         });
